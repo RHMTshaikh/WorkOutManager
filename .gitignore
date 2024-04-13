@@ -29,24 +29,24 @@ backend/env.production.local
 # yarn-error.log*
 
 
-# workoutmanager
-# -backend
-# --controller
-# --models
-# --node_modules
-# --routes
-# --.env
-# --package-lock.json
-# --package.json
-# --server.js
+workoutmanager
+-backend
+--controller
+--models
+--node_modules
+--routes
+--.env
+--package-lock.json
+--package.json
+--server.js
 
-# -frontend
-# --node_modules
-# --public
-# --src
-# --.gitignore
-# --package-lock.json
-# --package.json
-# --README.md
+-frontend
+--node_modules
+--public
+--src
+--.gitignore
+--package-lock.json
+--package.json
+--README.md
 
-# -gitignore
+-gitignore
