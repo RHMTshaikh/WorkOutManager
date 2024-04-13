@@ -11,7 +11,7 @@ app.use(express.json())
 
 app.use('/api/workouts', workoutRoutes)
 app.use('/api/user', userRoutes)
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.status(200).json({mssg:'hello here'})
 })
 
