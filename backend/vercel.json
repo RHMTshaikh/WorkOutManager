@@ -1,1 +1,1 @@
-{ "version": 2, "rewrites": [{ "source": "https://work-out-manager-api.vercel.app", "destination": "/api" }] }
+{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
