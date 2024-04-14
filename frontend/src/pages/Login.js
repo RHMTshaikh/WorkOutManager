@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useLogin } from "../hooks/useLogin"
 
-const Signup = () => {
-  const [email, setEmail] = useState('') // array destructuring
+const Login = () => {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { login, error, isLoading } = useLogin()
+  const {login, error, isLoading} = useLogin()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -14,7 +14,7 @@ const Signup = () => {
 
   return (
     <form className="login" onSubmit={handleSubmit}>
-      <h3>Login</h3>
+      <h3>Log In</h3>
       
       <label>Email address:</label>
       <input 
@@ -29,10 +29,10 @@ const Signup = () => {
         value={password} 
       />
 
-      <button disabled={isLoading}>Sign Up</button>
+      <button disabled={isLoading}>Log in</button>
       {error && <div className="error">{error}</div>}
     </form>
   )
 }
 
-export default Signup
+export default Login
