@@ -13,7 +13,7 @@ const WorkoutDetails = ({workout}) => {
   }
 
   const handleClick = async ()=>{
-    const response = await fetch(`${SERVER_URL}api/workouts/`+ workout._id, {
+    const response = await fetch(`${SERVER_URL}/api/workouts/`+ workout._id, {
       method: 'DELETE',
       headers:{
         'Authorization': `Bearer ${user.token}`

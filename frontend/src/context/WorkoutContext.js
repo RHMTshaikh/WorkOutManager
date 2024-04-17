@@ -3,6 +3,7 @@ import { createContext, useReducer } from "react";
 export const WorkoutsContext = createContext()
 
 export const workoutsReducer = (state, action) =>{
+    
     switch(action.type) {
         case 'SET_WORKOUTS':
             return {
@@ -22,7 +23,7 @@ export const workoutsReducer = (state, action) =>{
 }
 
 export const WorkoutsContextProvider = ({children}) =>{
-    const [state, dispatch] = useReducer(workoutsReducer, {
+    const [state, dispatch] = useReducer(workoutsReducer, { // state and dispatch are not keywords
         workouts: null
     })
 

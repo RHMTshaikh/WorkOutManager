@@ -28,6 +28,8 @@ const Home = () => {
     if (user) {
       fetchWorkouts()
     }
+    console.log("workouts", workouts)
+
 
   },[dispatch, user])
 

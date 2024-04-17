@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 import { useLogout } from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext'
 
-import SERVER_URL from '../config/config'
-
 const Navbar = () => {
   const { logout } = useLogout()
   const { user } = useAuthContext()
