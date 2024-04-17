@@ -20,12 +20,11 @@ app.use(cors())
 //middleware
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.status(200).json({mssg:'/hello here/'})
+app.use((req, res, next) => {
+    console.log(req.path, req.method)
+    next()
 })
-app.get('/api', (req, res) => {
-    res.status(200).json({mssg:'hello here'})
-})
+
 app.use('/api/workouts', workoutRoutes)
 app.use('/api/user', userRoutes)
 
