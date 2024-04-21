@@ -1,11 +1,10 @@
 import { useEffect } from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { WorkoutFormContextProvider } from "../context/WorkoutFormContext"
 import { useAuthContext } from "../hooks/useAuthContext"
-
 // components
 import WorkoutDetails from "../components/WorkoutDetails"
 import WorkoutForm from "../components/WorkoutForm"
-import SERVER_URL from "../config/config"
 
 const Home = () => {
   const { workouts, dispatch } = useWorkoutsContext()
@@ -13,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch(`${SERVER_URL}/api/workouts`,{
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/workouts`,{
         headers:{
           'Authorization': `Bearer ${user.token}`
         }
@@ -24,13 +23,10 @@ const Home = () => {
         dispatch({type: 'SET_WORKOUTS', payload: json})
       }
     }
-
     if (user) {
+      console.log("fetching...")
       fetchWorkouts()
     }
-    console.log("workouts", workouts)
-
-
   },[dispatch, user])
 
   return (
@@ -40,7 +36,9 @@ const Home = () => {
           <WorkoutDetails workout={workout} key={workout._id} />
         ))}
       </div>
-      <WorkoutForm />
+      <WorkoutFormContextProvider>
+        <WorkoutForm />
+      </WorkoutFormContextProvider>
     </div>
   )
 }

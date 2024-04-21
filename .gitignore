@@ -1,5 +1,7 @@
 backend/node_modules/
 backend/.env
+backend/training.jsonl
+frontend/.env
 frontend/node_modules/
 
 
