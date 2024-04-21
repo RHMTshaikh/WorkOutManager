@@ -73,3 +73,5 @@ const analyzeTranscript = async (req, res)=> {
 }
 // analyzeTranscript();
 module.exports = analyzeTranscript
+
+// npm uninstall browserify buffer crypto-browserify fs https-browserify os-browserify path-browserify polyfills querystring-es3 stream-browserify stream-http
