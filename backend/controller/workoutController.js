@@ -30,10 +30,11 @@ const createWorkout = async (req, res)=>{
     if(!reps){
         emptyFields.push('reps')
     }
-    // if(!load){ // load can be empty
+    // load can be empty
+    // if(!load){      
     //     emptyFields.push('load')
     // }
-    if(emptyFields.length > 1){
+    if(emptyFields.includes('title') || emptyFields.includes('reps')){
         return res.status(400).json({error: 'Please fill compulsory fields ',emptyFields })
     }
     

@@ -1,5 +1,5 @@
 /* google font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap'); 
 
 /* layout */
 :root {
@@ -57,7 +57,7 @@ header a {
   color: #555;
 }
 .workout-details span {
-  position: absolute;
+  position: absolute; /*position: absolute property positions an element relative to its closest positioned ancestor or to the initial containing block if there is no positioned ancestor. */
   top: 20px;
   right: 20px;
   cursor: pointer;
@@ -73,12 +73,11 @@ label, input {
 }
 input {
   padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin: 10px , 20px;
   width: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-sizing: border-box; /*box-sizing: border-box;, padding and borders are included in the specified width and height of the element.*/
 }
 form button {
   background: var(--primary);
@@ -88,43 +87,86 @@ form button {
   font-family: "Poppins";
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 div.error {
+  position: relative;
   padding: 10px;
   background: #ffefef;
   border: 1px solid var(--error);
   color: var(--error);
   border-radius: 4px;
   margin: 20px 0;
+  font-size: 0.7em;
 }
 input.error {
   border: 1px solid var(--error);
 }
+i.error{
+  color: var(--error);
+  position: absolute;
+  top: 5px;
+  right:5px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 40%;
+}
+i.error:hover{
+  outline: 1px solid #e6366e5e;
+}
 
 /* navbar */
-nav {
-  display: flex;
-  align-items: center;
-}
-nav a, nav button {
-  margin-left: 10px;
-}
-nav button {
-  background: #fff;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-family: "Poppins";
-  cursor: pointer;
-  font-size: 1em;
-}
-
-/* auth forms */
-form.signup, form.login {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 4px;
-}
+/* nav { */
+  /* display: flex; */
+  /* align-items: center; */
+  /* } */
+  nav a, nav button {
+    margin-left: 10px;
+  }
+  nav button {
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: "Poppins";
+    cursor: pointer;
+    font-size: 1em;
+  }
+  
+  /* auth forms */
+  form.signup, form.login {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+  }
+  
+  button:active {
+    background-color: #1aac839d;
+    /* transition:step-start 3s; */
+  }
+  
+  .transcript-text{
+    position: relative;
+    background-color: rgb(247, 247, 247);
+    border: 2px solid rgba(0, 0, 0, 0.344);
+    font-size: 0.7em;
+    border-radius: 4px;
+    margin-top: 10px;
+    padding: 6px 10px 6px 2px;
+    box-sizing: border-box;
+  }
+  .transcript-text i{
+    color: #555;
+    position: absolute;
+    top: 2px;
+    right:2px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 40%;
+  }
+  .transcript-text i:hover{
+  outline: 1px solid #555;
+  }

@@ -7,7 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
 
-function App() {
+function App() { // name of the component must be in strat with capoital 
   const { user } = useAuthContext()
   
   return (

@@ -13,7 +13,7 @@ const WorkoutForms = () => {
     const [ load, setLoad] = useState('')
     const [ reps, setReps] = useState('')
     const [ error, setError] = useState(null)
-    const [ emptyFields, setEmptyFields] = useState([])
+    const [ emptyFields, setEmptyFields] = useState([""])
 
     useEffect(() => {
         if (formData) {
@@ -47,15 +47,18 @@ const WorkoutForms = () => {
             setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
-            console.log("in the workoutForm")
-            console.log(json.mssg)
+            setEmptyFields([" "])
+            setError(null)
             setTitle('')
             setLoad('')
             setReps('')
-            setError(null)
-            setEmptyFields([])
             dispatch({type: 'CREATE_WORKOUT', payload: json})
         }
+    }
+    const removeErrorCLass = ()=>{
+        const inputs = document.querySelectorAll('.error')
+        inputs.forEach(input => {input.classList.remove('error')});
+        setEmptyFields([""])
     }
 
     return (
@@ -84,10 +87,15 @@ const WorkoutForms = () => {
                     className={ emptyFields.includes('reps') ? 'error' : '' }
                 />
             <button onClick={handleSumbit} >Add Workout</button>
-            {error && <div className="error" >{error + emptyFields}</div> }
             <div>
-                <ListeningComponent />
+                <ListeningComponent setError={setError} removeErrorCLass={removeErrorCLass} />
             </div>
+            {error && 
+                <div className="error" >
+                    {error + emptyFields}
+                    <i onClick={()=>{setError(null); removeErrorCLass()}} className="material-symbols-outlined error">close</i>
+                </div> 
+            }
         </form>
     )
 }

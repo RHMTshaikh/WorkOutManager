@@ -5,7 +5,7 @@ const {VertexAI} = require('@google-cloud/vertexai');
 const analyzeTranscript = async (req, res)=> {
 
     // Initialize Vertex with your Cloud project and location
-    const vertex_ai = new VertexAI({project: 'project1-420817', location: 'us-central1'});
+    const vertex_ai = new VertexAI({project: `${process.env.VERTEX_AI_API}`, location: 'us-central1'});
         // Instantiate the models
     const generativeModel = vertex_ai.preview.getGenerativeModel({
         model: 'gemini-1.0-pro-002',
