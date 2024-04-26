@@ -13,8 +13,11 @@ body {
 }
 header {
   background: #fff;
+  min-width: 700px ;
 }
 header .container {
+  min-width: 540px ;
+  flex-grow: 1;
   max-width: 1400px;
   margin: 0 auto;
   padding: 10px 20px;
@@ -35,7 +38,7 @@ header a {
 /* homepage */
 .home {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 5fr 3fr;
   gap: 100px;
 }
 .workout-details {
@@ -142,10 +145,37 @@ i.error:hover{
     background: #fff;
     border-radius: 4px;
   }
-  
+  .google-Oauth-btn{
+    display: flex;
+    width: 50%;
+    margin: 5px auto;
+    padding: 0;
+    height: 44px;
+    border: 2px solid var(--primary);
+  }
+  .google-Oauth-btn .logo{
+    color: var(--primary);
+    background-color: white;
+    height: 100%;
+    aspect-ratio: 1/1;
+    font-size: 26px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  .google-Oauth-btn i{
+    margin: auto;
+  }
+  .google-Oauth-btn .text{
+    color: white;
+    flex-grow: 1;
+    margin: auto;
+    font-size: 14px;
+  }
+
   button:active {
     background-color: #1aac839d;
-    /* transition:step-start 3s; */
   }
   
   .transcript-text{
@@ -169,4 +199,24 @@ i.error:hover{
   }
   .transcript-text i:hover{
   outline: 1px solid #555;
+  }
+  .transcript-component button{
+    display: inline;
+    margin-right: 10px;
+  }
+  form.create{
+    min-width: 260px;
+    max-width: 300px;
+  }
+  button.analyze-btn{
+    min-width: none;
+  }
+  /* .analyze-btn{
+    color: black;
+    position: relative;
+    left: 55px;
+  } */
+
+  .workouts{
+    min-width: 300px;
   }

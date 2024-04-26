@@ -22,7 +22,7 @@ const getWorkout = async (req,res)=>{
 const createWorkout = async (req, res)=>{
     const { title, load, reps} = req.body
 
-    let emptyFields = []
+    let emptyFields = ['']
 
     if(!title){
         emptyFields.push('title')
@@ -35,11 +35,11 @@ const createWorkout = async (req, res)=>{
     //     emptyFields.push('load')
     // }
     if(emptyFields.includes('title') || emptyFields.includes('reps')){
-        return res.status(400).json({error: 'Please fill compulsory fields ',emptyFields })
+        return res.status(400).json({error: 'Please fill compulsory fields: ',emptyFields })
     }
     
     try {
-        const user_id = req.user._id
+    const user_id = req.user._id // _id is extracted from the jwt token recieved from the user and added to request in requierAuth
         const workout = await Workout.create({title, load, reps, user_id})
         res.status(200).json(workout)
     } catch (error) {

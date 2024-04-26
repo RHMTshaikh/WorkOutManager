@@ -2,6 +2,7 @@ backend/node_modules/
 backend/.env
 backend/training.jsonl
 frontend/.env
+frontend/src/googleAuth.json
 frontend/node_modules/
 frontend/src/googleAuth.json
 

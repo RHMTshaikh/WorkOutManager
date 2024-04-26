@@ -8,14 +8,13 @@ const requireAuth = async (req, res, next) => {
     if(!authorization){
         return res.status(401).json({error:"Authorization token required"})
     }
-
     const token = authorization.split(' ')[1]
 
     try {
         const {_id} = jwt.verify(token, process.env.SECRET)
 
         //attaching user id to the request body
-        req.user = await User.findOne({_id}).select('_id')
+        req.user = await User.findOne({_id}).select('_id') // request is of type object
         next()
     } catch (error) {
         console.log(error)

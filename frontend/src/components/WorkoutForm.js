@@ -13,7 +13,7 @@ const WorkoutForms = () => {
     const [ load, setLoad] = useState('')
     const [ reps, setReps] = useState('')
     const [ error, setError] = useState(null)
-    const [ emptyFields, setEmptyFields] = useState([""])
+    const [ emptyFields, setEmptyFields] = useState([''])
 
     useEffect(() => {
         if (formData) {
@@ -32,33 +32,36 @@ const WorkoutForms = () => {
         }
         const workout = {title, load, reps}
 
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/workouts`, {
-            method: 'POST',
-            body: JSON.stringify(workout),
-            headers:{
-                'Content-Type' : 'application/json',
-                'Authorization': `Bearer ${user.token}`
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/workouts`, {
+                method: 'POST',
+                body: JSON.stringify(workout),
+                headers:{
+                    'Content-Type' : 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+            
+            if (!response.ok) {
+                //{error: 'Please fill compulsory fields: ',emptyFields }
+                setError(json.error)
+                if (json.emptyFields) {
+                    setEmptyFields(json.emptyFields)
+                }
             }
-        })
-        const json = await response.json()
-
-        if (!response.ok) {
-            setError(json.error)
-            setEmptyFields(json.emptyFields)
-        }
-        if (response.ok) {
-            setEmptyFields([" "])
-            setError(null)
-            setTitle('')
-            setLoad('')
-            setReps('')
-            dispatch({type: 'CREATE_WORKOUT', payload: json})
-        }
+            if (response.ok) {
+                dispatch({type: 'CREATE_WORKOUT', payload: json})
+                setEmptyFields([''])
+                setError(null)
+                setTitle('')
+                setLoad('')
+                setReps('')
+            }
     }
     const removeErrorCLass = ()=>{
         const inputs = document.querySelectorAll('.error')
         inputs.forEach(input => {input.classList.remove('error')});
-        setEmptyFields([""])
+        setEmptyFields([''])
     }
 
     return (

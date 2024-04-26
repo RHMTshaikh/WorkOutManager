@@ -30,6 +30,7 @@ const ListeningComponent = ({setError, removeErrorCLass}) => {
     const sendTranscript = async (e)=>{
         e.preventDefault()
         setAnalyzing(true)
+        setError(null)
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/workouts/analyze`, 
                 {
@@ -41,17 +42,22 @@ const ListeningComponent = ({setError, removeErrorCLass}) => {
                     }
                 }, {signal}
             )
+            setAnalyzing(false)
+            const json = await response.json()
+
+            if (!response.ok) {
+                setError(json.error)
+            }
             if (response.ok) {
                 resetTranscript()
-                const json = await response.json()
-                console.log({"transcript":transcript,"json":json})
                 dispatch({type:'SET_FORM', payload:json})
+                // console.log({"transcript":transcript,"json":json})
                 // setTimeout(()=>{console.log("formData",formData)},1000) // formDAta will not get updated here
-                setAnalyzing(false)
                 
             }
         } catch (error) {
             console.log("error in caught in listeningComponent:-" ,error)
+            setAnalyzing(false)
         }
     }
     const stopFetching = (e)=>{
@@ -69,16 +75,16 @@ const ListeningComponent = ({setError, removeErrorCLass}) => {
     return (
         <div className="transcript-component">
             <button onClick = { isListening? stopListening : startListening} > {isListening ? 'Stop Listening' : 'Start Listening' } </button>
+            { transcript && !isListening &&
+                <button className='analyze-btn' onClick={ isAnalyzing ? stopFetching : sendTranscript  } > {isAnalyzing ? 'Stop Analyzing' : 'Analyze'} </button>
+            }
 
             {transcript &&
                 <div className="transcript-text" >
                     {transcript}
-                    <i onClick={resetTranscript} className="material-symbols-outlined">close</i>
+                    <i onClick={()=>{resetTranscript(); setError(null)} } className="material-symbols-outlined">close</i>
 
                 </div>
-            }
-            { transcript && !isListening &&
-                <button onClick={ isAnalyzing ? stopFetching : sendTranscript  } > {isAnalyzing ? 'Stop Analyzing...' : 'Analyze'} </button>
             }
         </div>
     );

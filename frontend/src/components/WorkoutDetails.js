@@ -23,7 +23,10 @@ const WorkoutDetails = ({workout}) => {
       dispatch({ type:'DELETE_WORKOUT', payload: json })
     }
   }
-
+  // setTimeout(() => {
+  //   console.log(formatDistanceToNow(new Date("2024-04-26T04:04:55.110Z"  ), { addSuffix: true }));
+    
+  // }, 1000);
   return (
     <div className="workout-details">
         <h4>{ workout.title }</h4>

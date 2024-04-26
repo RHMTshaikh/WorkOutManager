@@ -39,25 +39,33 @@ const analyzeTranscript = async (req, res)=> {
             parts: 
             [{
                 text: `extract these three workout related data from the prompt title, load, and reps and make a json file like this
-                {\"title\": \"...\", \"load\":\"...\", \"reps\":\"...\"}
+                {"title": "...", "load":"...", "reps":"..."}
                 instructions: 
-                only produce the json file and nothing else
-
+                    1. only produce the json file and nothing else,
+                    2. title and reps are mendatory fields while load is an optional field, if title or reps is missing create  a json file of error in this format {"error": "title or reps is not provided"}
+                    3. you must follow this data model for json output {"title": String_type, "load":Number_type, "reps":Number_type}
+                    4. if provided prompt does not contain necessary details then create a json file of error in this formate  {"error": "...error message..."};
+                        example of json file of error messages:
+                            1. {error: "does not include workout details."}
+                            2. {error: "does not include title."}
+                            3. {error: "does not include reps."}
+                            4. {error: "does not include title and reps."}
+                            choose Appropriate json file of error from the above according to the prompt, only create the object you must
+                
+                These are some valid inputs and their corresponding outputs.
                 input: create a new work out with 12 reps of situps with Lord 5kg with name of bench_press
-                output: { \"title\": \"Pushups\", \"load\": \"1\", \"reps\": \"34\"}
+                output: { "title": "Pushups", "load": "1", "reps": "34"}
 
                 input: create a new work out with 12 reps of situps with load 5kg 
-
-                output: { \"title\": \"Situps\", \"load\": \"5\", \"reps\": \"12\"}
+                output: { "title": "Situps", "load": "5", "reps": "12"}
 
                 input: Can you suggest a core exercise? Maybe some planks with no load and about 60 seconds hold?
-
-                output: { \"title\": \"Planks\", \"load\": \"0\", \"reps\": \"60\"}
+                output: { "title": "Planks", "load": "0", "reps": "60"}
 
                 input: ${prompt}
-                output:`
+                output:`,
             }]
-        }],
+        }]
     };
 
     try {
@@ -65,13 +73,18 @@ const analyzeTranscript = async (req, res)=> {
 
         const response = (await streamingResp.response)
 
-        res.status(200).json(JSON.parse(response.candidates[0].content.parts[0].text))
+        const Json = JSON.parse(response.candidates[0].content.parts[0].text)
+        console.log(Json);
+        if (Json.error) {
+            return res.status(400).json(Json)
+        }
+
+        return  res.status(200).json(Json)
         
     } catch (error) {
-        res.status(400).json({error: error.message})
+        console.error("RRRR",error.message);
+        return res.status(400).json({error: 'some error has occured while parsing the promt'})
     }
 }
 // analyzeTranscript();
 module.exports = analyzeTranscript
-
-// npm uninstall browserify buffer crypto-browserify fs https-browserify os-browserify path-browserify polyfills querystring-es3 stream-browserify stream-http
