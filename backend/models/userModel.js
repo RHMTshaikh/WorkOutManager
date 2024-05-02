@@ -57,7 +57,6 @@ userSchema.statics.signup = async function(email, password, type) {
             return await this.create({ email, password: hashPassword,  authenticationType: 'Google' })//creating document at mongodb
             break
     }
-
 }
 
 userSchema.statics.login = async function(email, password, type) {
@@ -77,18 +76,21 @@ userSchema.statics.login = async function(email, password, type) {
                 throw Error('Incorrect Password')
             }
             return selfUser
-            break;
+        break;
             
         case 'Google':
             const googleUser = await this.findOne({ email })
-            if(!googleUser){
-                // throw Error('Email not found!')
-                return {error: 'Email not found!'}
 
+            if( googleUser){
+                return googleUser
             }
-            return googleUser
-            break;
-        }
+            if(!googleUser){
+                const salt = await bcrypt.genSalt(10)
+                const hashPassword = await bcrypt.hash(password, salt)
+                return await this.create({ email, password: hashPassword,  authenticationType: 'Google' })//creating document at mongodb
+            }
+        break;
+    }
     }
 
-module.exports = mongoose.model('User', userSchema)
+    module.exports = mongoose.model('User', userSchema)

@@ -1,41 +1,58 @@
-import { useEffect } from "react"
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { WorkoutFormContextProvider } from "../context/WorkoutFormContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+
 // components
-import WorkoutDetails from "../components/WorkoutDetails"
+import WorkoutList from "../components/WorkoutList"
 import WorkoutForm from "../components/WorkoutForm"
 
 const Home = () => {
-  const { workouts, dispatch } = useWorkoutsContext()
   const { user } = useAuthContext()
+  const [ setAuthtype] = useState(null)
+  const { dispatch:dispatchAuth } = useAuthContext()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const fetchWorkouts = async () => {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/workouts`,{
-        headers:{
-          'Authorization': `Bearer ${user.token}`
+  if (!user) {
+    navigate('/login')
+  }
+
+  useEffect(()=>{
+    const getAccessCode = async () => {
+        const encodedUrl = encodeURIComponent(window.location.href);
+        console.log("encodedUrl",encodedUrl);
+        try {
+          //of user exists then login if not then signup automaticaly
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/google-auth/login?redirected_url=${encodedUrl}`, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+            })
+            const json = await response.json()
+            console.log('here');
+            if (!response.ok) {
+                console.log('response: ',response)
+                console.log('error: ',json)
+                setAuthtype(json.type)
+            }
+            if (response.ok) {
+                localStorage.setItem('user', JSON.stringify(json))
+                dispatchAuth({ type: 'LOGIN', payload: json })
+                console.log("here111");
+                navigate('/')
+            }
+            
+        } catch (error) {
+            console.log(error)
         }
-      })
-      const json = await response.json()
-
-      if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
-      }
     }
-    if (user) {
-      console.log("fetching...")
-      fetchWorkouts()
+    if ( window.location.href.split('?')[1]) {
+      getAccessCode()
     }
-  },[dispatch, user])
+  },[])
 
   return (
     <div className="home">
-      <div className="workouts">
-        {workouts && workouts.map(workout => (
-          <WorkoutDetails key={workout._id} workout={workout}  />
-        ))}
-      </div>
+      <WorkoutList/>
       <WorkoutFormContextProvider>
         <WorkoutForm />
       </WorkoutFormContextProvider>

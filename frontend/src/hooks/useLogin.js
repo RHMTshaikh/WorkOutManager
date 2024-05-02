@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useAuthContext } from "./useAuthContext"
 
@@ -5,6 +6,7 @@ export const useLogin = () => {
     const [ error, setError] = useState(null)
     const [ isLoading, setIsLoading] = useState(null)
     const { dispatch } = useAuthContext()
+    const navigate = useNavigate()
 
     const login = async (email, password) =>{
         setIsLoading(true)
@@ -24,11 +26,9 @@ export const useLogin = () => {
                 setError(json.error)
             }
             if (response.ok) {
-                // save the user to ocal storage 
                 localStorage.setItem('user', JSON.stringify(json))
-    
-                //update the Auth context
                 dispatch({ type: 'LOGIN', payload: json })
+                navigate('/')
     
                 setIsLoading(false)
             }

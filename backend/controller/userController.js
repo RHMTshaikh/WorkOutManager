@@ -10,12 +10,11 @@ const createToken = (_id) => {
 //login user
 const loginUser = async (req,res) =>{
     const { email, password } = req.body // object destructuring names should be same
-    // console.log(email,password);
     try {
         const user = await User.login(email, password, type= 'self') 
-
+        
         const token = createToken(user._id)
-
+        
         res.status(200).json({email, token})
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -37,56 +36,14 @@ const signupUser = async (req,res) =>{
     }
 }
 
-
-const signupUserGoogle = async (req, res)=>{
-    const redirectedURL = req.query.redirected_url; // Extract URL from query parameters
-
-    const parsedURL = qs.parse(redirectedURL.split('?'))
-    const redirectURL = parsedURL[0]
-    
-    const authorizationCode = qs.parse(parsedURL[1]).code
-    const clientID = process.env.GOOGLE_CLIENT_ID
-    const clientSecret = process.env.GOOGLE_SECRET
-    const tokenUrl = process.env.GOOGLE_TOKEN_URL
-    
-    const requestBody = {
-        code: authorizationCode,
-        client_id: clientID,
-        client_secret: clientSecret,
-        redirect_uri: redirectURL,
-        grant_type: 'authorization_code',
-    }
-    
-    try {
-        const response = await axios.post(tokenUrl,qs.stringify(requestBody),{
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        })
-        const access_token = response.data.access_token
-        const id_token  = response.data.id_token
-        
-        const googleUser = jwt.decode(id_token)
-        const userEmail = googleUser.email
-        const userSUB = googleUser.sub
-        
-        const user = await User.signup(userEmail, userSUB, type='Google')
-        if (user.error) {
-            return res.status(400).json(user)
-        }
-        const token = createToken(user._id,)
-        
-        res.status(200).json({email: userEmail, token})
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
-}
-
 const loginUserGoogle = async (req, res)=>{
-    const redirectedURL = req.query.redirected_url; // Extract URL from query parameters
+    const redirectedURL = req.query.redirected_url;// Extract URL from query parameters
     const parsedURL = qs.parse(redirectedURL.split('?'))
-    const redirectURL = parsedURL[0]
-    
+
+    let redirectURL = parsedURL[0]
+    if (redirectURL[redirectURL.length -1] == '/') {
+        redirectURL = parsedURL[0].slice(0, -1)
+    }
     const authorizationCode = qs.parse(parsedURL[1]).code
     const clientID = process.env.GOOGLE_CLIENT_ID
     const clientSecret = process.env.GOOGLE_SECRET
@@ -99,7 +56,6 @@ const loginUserGoogle = async (req, res)=>{
         redirect_uri: redirectURL,
         grant_type: 'authorization_code',
     }
-    
     try {
         const response = await axios.post(tokenUrl,qs.stringify(requestBody),{
             headers: {
@@ -126,4 +82,4 @@ const loginUserGoogle = async (req, res)=>{
     }
 }
 
-module.exports = { signupUser, loginUser, signupUserGoogle, loginUserGoogle }
+module.exports = { signupUser, loginUser, loginUserGoogle }

@@ -65,7 +65,8 @@ const WorkoutForms = () => {
     }
 
     return (
-        <form className="create">
+        <>
+        {user && <form className="create">
             <h3>Add a New Workout</h3>
 
             <label>Exercise Title:</label>
@@ -99,7 +100,8 @@ const WorkoutForms = () => {
                     <i onClick={()=>{setError(null); removeErrorCLass()}} className="material-symbols-outlined error">close</i>
                 </div> 
             }
-        </form>
+        </form>}
+        </>
     )
 }
 

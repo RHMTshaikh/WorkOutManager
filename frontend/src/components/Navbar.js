@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <header>
         <div className="container">
-            <Link to={`/`}>
+            <Link to={ user ?  `/` : '/login'}>
                 <h1>Workout Buddy</h1>
             </Link>
             <nav>
