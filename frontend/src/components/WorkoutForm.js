@@ -69,7 +69,7 @@ const WorkoutForms = () => {
         const canvas = document.getElementById('canvas')
         if (user) {
             if (canvas) {
-                QRCode.toCanvas(canvas, `process.env.REACT_APP_FRONTEND_URL/?qremail=${user.email}&qrtoken=${user.token}`, function (error) {
+                QRCode.toCanvas(canvas, `${process.env.REACT_APP_FRONTEND_URL}/?qremail=${user.email}&qrtoken=${user.token}`, function (error) {
                     if (error) {
                         console.error(error)
                     }
