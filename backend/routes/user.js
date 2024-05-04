@@ -6,6 +6,7 @@ const { signupUser, loginUser, signupUserGoogle, loginUserGoogle } = require('..
 
 router.post('/login', loginUser)
 router.post('/signup', signupUser)
+router.post('/QRlogin', loginUserByQR)
 
 // router.get('/google-auth/signup', signupUserGoogle)
 router.get('/google-auth/login', loginUserGoogle)

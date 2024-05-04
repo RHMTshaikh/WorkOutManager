@@ -1,3 +1,4 @@
+import QRCode from 'qrcode';
 import {  useEffect, useState } from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -63,6 +64,19 @@ const WorkoutForms = () => {
         inputs.forEach(input => {input.classList.remove('error')});
         setEmptyFields([''])
     }
+    
+    useEffect(()=>{
+        const canvas = document.getElementById('canvas')
+        if (user) {
+            if (canvas) {
+                QRCode.toCanvas(canvas, `process.env.REACT_APP_FRONTEND_URL/?qremail=${user.email}&qrtoken=${user.token}`, function (error) {
+                    if (error) {
+                        console.error(error)
+                    }
+                }) 
+            }
+        }
+    },[user])
 
     return (
         <>
@@ -98,9 +112,11 @@ const WorkoutForms = () => {
                 <div className="error" >
                     {error + emptyFields}
                     <i onClick={()=>{setError(null); removeErrorCLass()}} className="material-symbols-outlined error">close</i>
-                </div> 
+                    </div> 
             }
+            <canvas id="canvas" ></canvas>
         </form>}
+        
         </>
     )
 }

@@ -82,4 +82,18 @@ const loginUserGoogle = async (req, res)=>{
     }
 }
 
-module.exports = { signupUser, loginUser, loginUserGoogle }
+const loginUserByQR = async (req, res)=>{
+    try {
+        const {_id} = jwt.verify(req.body.token, process.env.SECRET) //{ _id: '64276877ia9472dod68445mc', iat: 1714801933, exp: 1714888333 }
+        const userMongo = await User.findById(_id)
+
+        if (req.body.email != userMongo.email) { //!= will perform type correction if necessary
+            return res.status(400).json({error:'email did not match'})
+        }
+        return res.status(200).json(req.body)
+    } catch (error) { 
+        console.error(error);
+    }
+}
+
+module.exports = { signupUser, loginUser, loginUserGoogle, loginUserByQR }
