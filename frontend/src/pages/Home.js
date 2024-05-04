@@ -65,7 +65,7 @@ const Home = () => {
     }
 
     if ( window.location.href.split('?')[1]) {
-      if (window.location.href.split('?')[1].includes('email+openid&authuser=0&prompt=consent')) {
+      if (window.location.href.split('?')[1].includes('userinfo.email+openid&authuser=')) {
         getAccessCode()
         
       } else if(window.location.href.split('?')[1].includes('qremail')) {
