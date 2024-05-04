@@ -220,3 +220,10 @@ i.error:hover{
   .workouts{
     min-width: 300px;
   }
+  canvas {
+    /* width: 200px;
+    height: 200px; */
+    /* border: 2px solid black; */
+    border-radius: 5px;
+  }
+  

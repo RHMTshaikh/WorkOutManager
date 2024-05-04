@@ -20,7 +20,6 @@ const Home = () => {
   useEffect(()=>{
     const getAccessCode = async () => {
         const encodedUrl = encodeURIComponent(window.location.href);
-        console.log("encodedUrl",encodedUrl);
         try {
           //of user exists then login if not then signup automaticaly
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/google-auth/login?redirected_url=${encodedUrl}`, {
@@ -28,16 +27,12 @@ const Home = () => {
                 headers: {'Content-Type': 'application/json'},
             })
             const json = await response.json()
-            console.log('here');
             if (!response.ok) {
-                console.log('response: ',response)
-                console.log('error: ',json)
                 setAuthtype(json.type)
             }
             if (response.ok) {
                 localStorage.setItem('user', JSON.stringify(json))
                 dispatchAuth({ type: 'LOGIN', payload: json })
-                console.log("here111");
                 navigate('/')
             }
             
@@ -45,10 +40,42 @@ const Home = () => {
             console.log(error)
         }
     }
-    if ( window.location.href.split('?')[1]) {
-      getAccessCode()
+    const loginByQR = async ()=>{
+      const urlParams = new URLSearchParams(window.location.search)
+      const email = urlParams.get('qremail')
+      const token = urlParams.get('qrtoken')
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/QRlogin`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify( {email,token})
+        })
+        const json = await response.json()
+        if (!response.ok) {
+          console.log(json.error);
+        }
+        if (response.ok) {
+          localStorage.setItem('user', JSON.stringify(json))
+          dispatchAuth({ type: 'LOGIN', payload: json })
+          navigate('/')
+        }
+        
+      } catch (error) {
+      }
     }
+
+    if ( window.location.href.split('?')[1]) {
+      if (window.location.href.split('?')[1].includes('email+openid&authuser=0&prompt=consent')) {
+        getAccessCode()
+        
+      } else if(window.location.href.split('?')[1].includes('qremail')) {
+        console.log('qr login');
+        loginByQR()
+      }
+    }
+
   },[])
+
 
   return (
     <div className="home">
