@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //controller function
-const { signupUser, loginUser, signupUserGoogle, loginUserGoogle } = require('../controller/userController')
+const { signupUser, loginUser, signupUserGoogle, loginUserGoogle, loginUserByQR } = require('../controller/userController')
 
 router.post('/login', loginUser)
 router.post('/signup', signupUser)
