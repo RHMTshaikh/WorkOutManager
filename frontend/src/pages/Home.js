@@ -13,9 +13,9 @@ const Home = () => {
   const { dispatch:dispatchAuth } = useAuthContext()
   const navigate = useNavigate()
 
-  if (!user) {
-    navigate('/login')
-  }
+  // if (!user) {  // this will cause problem on render.com
+  //   navigate('/login')
+  // }
 
   useEffect(()=>{
     const getAccessCode = async () => {
