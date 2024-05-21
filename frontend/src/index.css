@@ -18,7 +18,6 @@ header {
 header .container {
   min-width: 540px ;
   flex-grow: 1;
-  max-width: 1400px;
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
@@ -29,6 +28,81 @@ header a {
   color: #333;
   text-decoration: none;
 }
+nav div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.profile-pic-popup{
+  transform: translate(30vw, -100px);
+  width: 200px;
+  height: 260px;
+  opacity: 1;
+  border-radius: 5px;
+  padding: 0;
+  border: none;
+  
+}
+.profile-pic-popup::backdrop{
+  background-color: rgba(0, 0, 0, 0.476);
+}
+.profile-pic-popup div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.profile-pic-popup img {
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
+}
+.profile-pic-popup .options{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.profile-pic-popup button{
+  margin: 0;
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.profile-pic-div{
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-pic-div span{
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  transform: scale(1.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-pic-div img{
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+.profile-pic-div img:hover{
+  transform: scale(1.2);
+  opacity: 0.7;
+}
+
 .pages{
   max-width: 1400px;
   padding: 20px;
@@ -118,112 +192,106 @@ i.error:hover{
   outline: 1px solid #e6366e5e;
 }
 
-/* navbar */
-/* nav { */
-  /* display: flex; */
-  /* align-items: center; */
-  /* } */
-  nav a, nav button {
-    margin-left: 10px;
-  }
-  nav button {
-    background: #fff;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-family: "Poppins";
-    cursor: pointer;
-    font-size: 1em;
-  }
-  
-  /* auth forms */
-  form.signup, form.login {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 4px;
-  }
-  .google-Oauth-btn{
-    display: flex;
-    width: 50%;
-    margin: 5px auto;
-    padding: 0;
-    height: 44px;
-    border: 2px solid var(--primary);
-  }
-  .google-Oauth-btn .logo{
-    color: var(--primary);
-    background-color: white;
-    height: 100%;
-    aspect-ratio: 1/1;
-    font-size: 26px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-  }
-  .google-Oauth-btn i{
-    margin: auto;
-  }
-  .google-Oauth-btn .text{
-    color: white;
-    flex-grow: 1;
-    margin: auto;
-    font-size: 14px;
-  }
+nav a, nav button {
+  margin-left: 10px;
+}
+nav button {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: "Poppins";
+  cursor: pointer;
+  font-size: 1em;
+}
 
-  button:active {
-    background-color: #1aac839d;
-  }
-  
-  .transcript-text{
-    position: relative;
-    background-color: rgb(247, 247, 247);
-    border: 2px solid rgba(0, 0, 0, 0.344);
-    font-size: 0.7em;
-    border-radius: 4px;
-    margin-top: 10px;
-    padding: 6px 10px 6px 2px;
-    box-sizing: border-box;
-  }
-  .transcript-text i{
-    color: #555;
-    position: absolute;
-    top: 2px;
-    right:2px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 40%;
-  }
-  .transcript-text i:hover{
-  outline: 1px solid #555;
-  }
-  .transcript-component button{
-    display: inline;
-    margin-right: 10px;
-  }
-  form.create{
-    min-width: 260px;
-    max-width: 300px;
-  }
-  button.analyze-btn{
-    min-width: none;
-  }
-  /* .analyze-btn{
-    color: black;
-    position: relative;
-    left: 55px;
-  } */
+/* auth forms */
+form.signup, form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+}
+.google-Oauth-btn{
+  display: flex;
+  width: 50%;
+  margin: 5px auto;
+  padding: 0;
+  height: 44px;
+  border: 2px solid var(--primary);
+}
+.google-Oauth-btn .logo{
+  color: var(--primary);
+  background-color: white;
+  height: 100%;
+  aspect-ratio: 1/1;
+  font-size: 26px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.google-Oauth-btn i{
+  margin: auto;
+}
+.google-Oauth-btn .text{
+  color: white;
+  flex-grow: 1;
+  margin: auto;
+  font-size: 14px;
+}
 
-  .workouts{
-    min-width: 300px;
-  }
-  canvas {
-    /* width: 200px;
-    height: 200px; */
-    /* border: 2px solid black; */
-    border-radius: 5px;
-  }
-  
+button:active {
+  background-color: #1aac839d;
+}
+
+.transcript-text{
+  position: relative;
+  background-color: rgb(247, 247, 247);
+  border: 2px solid rgba(0, 0, 0, 0.344);
+  font-size: 0.7em;
+  border-radius: 4px;
+  margin-top: 10px;
+  padding: 6px 10px 6px 2px;
+  box-sizing: border-box;
+}
+.transcript-text i{
+  color: #555;
+  position: absolute;
+  top: 2px;
+  right:2px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 40%;
+}
+.transcript-text i:hover{
+outline: 1px solid #555;
+}
+.transcript-component button{
+  display: inline;
+  margin-right: 10px;
+}
+form.create{
+  min-width: 260px;
+  max-width: 300px;
+}
+button.analyze-btn{
+  min-width: none;
+}
+/* .analyze-btn{
+  color: black;
+  position: relative;
+  left: 55px;
+} */
+
+.workouts{
+  min-width: 300px;
+}
+canvas {
+  /* width: 200px;
+  height: 200px; */
+  /* border: 2px solid black; */
+  border-radius: 5px;
+}
