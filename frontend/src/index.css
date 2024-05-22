@@ -35,17 +35,18 @@ nav div{
   gap: 10px;
 }
 .profile-pic-popup{
-  transform: translate(30vw, -100px);
+  transform: translate(30vw, -15vh);
   width: 200px;
   height: 260px;
   opacity: 1;
   border-radius: 5px;
   padding: 0;
   border: none;
+  overflow: hidden;
   
 }
 .profile-pic-popup::backdrop{
-  background-color: rgba(0, 0, 0, 0.476);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .profile-pic-popup div{
   display: flex;

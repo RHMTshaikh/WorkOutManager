@@ -1,3 +1,4 @@
+import {useRef, useState} from 'react'
 import { Link } from 'react-router-dom'
 
 import { useLogout } from '../hooks/useLogout'
@@ -6,23 +7,41 @@ import { useAuthContext } from '../hooks/useAuthContext'
 const Navbar = () => {
 	const { logout } = useLogout()
 	const { user } = useAuthContext()
+	const imageInputRef = useRef(null)
+	const [selectedImage, setSelectedImage] = useState(null);
+	const defaultImage = 'concentric-circles.jpg' 
+	const profilePicPopup = document.querySelector('.profile-pic-popup');
 
 	const handleClick = () =>{
 		logout()
 	}
+	const closePopup = (e)=>{
+		if (e.target === profilePicPopup) {
+			profilePicPopup.close();
+			document.body.style.overflow = '';
+			profilePicPopup.removeEventListener('click', closePopup)
+		}
+	}
     const displayProfilePic = ()=>{
-        const profilePicPortal = document.querySelector('.profile-pic-popup');
-        profilePicPortal.showModal();
+        profilePicPopup.showModal();
         document.body.style.overflow = 'hidden';
-        
-        profilePicPortal.addEventListener('click', (e)=>{
-            console.log(e.target);
-            if (e.target === profilePicPortal) {
-                profilePicPortal.close();
-                document.body.style.overflow = '';
-            }
-        })
+        profilePicPopup.addEventListener('click', closePopup)
     }
+	const saveProfirlPic = (e) =>{
+		const file = e.target.files[0]
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			setSelectedImage(e.target.result); // Store the image data URL in state
+		};
+		reader.readAsDataURL(file);
+		profilePicPopup.close();
+		document.body.style.overflow = '';
+	}
+	const removeProfilePic = ()=>{
+		setSelectedImage(null)
+		profilePicPopup.close();
+		document.body.style.overflow = '';
+	}
 
 	return (
 		<header>
@@ -36,16 +55,25 @@ const Navbar = () => {
 							<span>{user.email}</span>
 							<div className="profile-pic-div"  onClick={displayProfilePic}>
 								<span className="material-symbols-outlined edit-icon" >edit</span>
-								<img className="profile-pic" src="concentric-circles.jpg" alt="" />
+								<img className="profile-pic" src={selectedImage || defaultImage} alt="" />
 							</div>
 							<button onClick={handleClick}>Log Out</button>
 
                             <dialog className="profile-pic-popup" >
                                 <div>
-                                    <img src="concentric-circles.jpg" alt="" />
+									<input
+									ref={imageInputRef}
+									type="file" 
+									name='imgfile'
+									accept='image/jpeg' 
+									id='imgfile' 
+									style={{display:'none'}}
+									onChange={saveProfirlPic}
+									/>
+                                    <img src={selectedImage || defaultImage} alt="" />
                                     <div className='options'>
-                                        <button>remove</button>
-                                        <button>update</button>
+                                        <button onClick={removeProfilePic}>remove</button>
+                                        <button onClick={() => imageInputRef.current.click()}>update</button>
                                     </div>
                                 </div>
                             </dialog>
