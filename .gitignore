@@ -1,5 +1,6 @@
 backend/node_modules/
 backend/.env
+backend/mykey.json
 backend/training.jsonl
 frontend/.env
 frontend/src/googleAuth.json

@@ -59,6 +59,12 @@ nav div{
   width: 200px;
   border-radius: 5px;
 }
+.profile-pic-popup i {
+  background-color: #ccc;
+  color: #555;
+  height: 200px;
+  font-size: 240px;
+}
 .profile-pic-popup .options{
   display: flex;
   flex-direction: row;
@@ -78,11 +84,12 @@ nav div{
   height: 44px;
   width: 44px;
   border-radius: 50%;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.profile-pic-div span{
+.profile-pic-div .edit-icon{
   height: 44px;
   width: 44px;
   border-radius: 50%;
@@ -91,17 +98,28 @@ nav div{
   align-items: center;
   justify-content: center;
 }
+.profile-pic-div .account-circle{
+  background-color: white;
+  border-radius: 50%;
+  font-size: 60px;
+  position: absolute;
+  color: #555;
+  transition: all .3s ease;
+}
+.profile-pic-div .account-circle:hover{
+  transform: scale(1.2);
+  opacity: 0.2;
+}
 .profile-pic-div img{
   height: 44px;
   width: 44px;
   border-radius: 50%;
   position: absolute;
-  cursor: pointer;
   transition: all .3s ease;
 }
 .profile-pic-div img:hover{
   transform: scale(1.2);
-  opacity: 0.7;
+  opacity: 0.3;
 }
 
 .pages{

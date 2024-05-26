@@ -17,6 +17,10 @@ const userSchema = new Schema({
   authenticationType: {
     type: String,
     required: true
+  },
+  profilePicName: {
+    type: String,
+    default: null,
   }
 })
 
@@ -91,6 +95,48 @@ userSchema.statics.login = async function(email, password, type) {
             }
         break;
     }
-    }
+}
 
-    module.exports = mongoose.model('User', userSchema)
+userSchema.statics.saveprofilePicName = async function (email) {
+    console.log('model');
+    const profilePicName = `${email}-profile-pic.jpeg`
+    try {
+        const updatedUser = await this.findOneAndUpdate(
+            { email },
+            { profilePicName },
+        )
+        return updatedUser;
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+};
+userSchema.statics.deleteprofilePicName = async function (_id) {
+    console.log('model');
+    const profilePicName = null
+    try {
+        const user = await this.findById(_id)
+        const profilePicName = user.profilePicName;
+        if (profilePicName) {
+            user.profilePicName = null
+            user.save()
+            return profilePicName
+        }
+        return null
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+};
+userSchema.statics.getProfilePicName = async function (_id) {
+    console.log('model');
+    try {
+        const user = await this.findById(_id)
+        return user.profilePicName;
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+};
+
+module.exports = mongoose.model('User', userSchema)
