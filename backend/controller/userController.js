@@ -40,6 +40,7 @@ const signupUser = async (req,res) =>{
 }
 
 const loginUserGoogle = async (req, res)=>{
+    console.log('loging google user...');
     const redirectedURL = req.query.redirected_url// Extract URL from query parameters
     const parsedURL = qs.parse(redirectedURL.split('?'))
 
@@ -65,6 +66,7 @@ const loginUserGoogle = async (req, res)=>{
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
         })
+        console.log('got the access token fron token url');
         const access_token = response.data.access_token //did not used access token yet need to learn what it is
         const id_token  = response.data.id_token
         
@@ -72,8 +74,10 @@ const loginUserGoogle = async (req, res)=>{
         const userEmail = googleUser.email
         const userSUB = googleUser.sub // using sub as a password but not sure about this
         
+        console.log('saving to database...');
         const user = await User.login(userEmail, userSUB, type='Google')
-        if (user.error) {
+        if (user.error) { // for self only
+            console.log('error from mongo: ', user.error);
             return res.status(400).json(user) //{error: "email not found"}
         }
         const token = createToken(user._id )

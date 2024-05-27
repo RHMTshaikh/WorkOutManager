@@ -9,7 +9,6 @@ import WorkoutForm from "../components/WorkoutForm"
 
 const Home = () => {
     const { user } = useAuthContext()
-    const [authType ,setAuthtype] = useState(null)
     const { dispatch:dispatchAuth } = useAuthContext()
     const navigate = useNavigate()
 
@@ -19,7 +18,7 @@ const Home = () => {
 
     useEffect(()=>{
         const getAccessCode = async () => {
-        
+            console.log("getting access code...");
             const encodedUrl = encodeURIComponent(window.location.href);
             try {
             //of user exists then login if not then signup automaticaly
@@ -29,9 +28,10 @@ const Home = () => {
                 })
                 const json = await response.json()
                 if (!response.ok) {
-                    setAuthtype(json.type)
+                    console.log("!response.ok", json);
                 }
                 if (response.ok) {
+                    console.log("response.ok", json);
                     localStorage.setItem('user', JSON.stringify(json))
                     dispatchAuth({ type: 'LOGIN', payload: json })
                     navigate('/')
@@ -66,6 +66,7 @@ const Home = () => {
         }
 
         if ( window.location.search) {
+            console.log("query string: ",window.location.search);
             if (window.location.search.includes('https://www.googleapis.com/auth/')) {
                 getAccessCode()
                 
