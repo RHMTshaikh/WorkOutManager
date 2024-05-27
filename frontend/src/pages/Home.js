@@ -68,7 +68,7 @@ const Home = () => {
         if ( window.location.search) {
             console.log("query string: ",window.location.search);
             console.log('decoded query String: ',decodeURIComponent(window.location.search));
-            if (decodeURIComponent(window.location.search).includes('https://www.googleapis.com/auth/userinfo.email&authuser=0&prompt=consent')) {
+            if (decodeURIComponent(window.location.search).includes('https://www.googleapis.com/auth/userinfo.email')) {
                 getAccessCode()
                 
             } else if(window.location.href.split('?')[1].includes('qremail')) {
