@@ -67,6 +67,7 @@ const Home = () => {
 
         if ( window.location.search) {
             console.log("query string: ",window.location.search);
+            console.log('decoded query String: ',decodeURIComponent(window.location.search));
             if (decodeURIComponent(window.location.search).includes('https://www.googleapis.com/auth/userinfo.email&authuser=0&prompt=consent')) {
                 getAccessCode()
                 
